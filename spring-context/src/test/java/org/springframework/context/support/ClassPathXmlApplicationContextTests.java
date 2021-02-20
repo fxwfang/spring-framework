@@ -325,6 +325,7 @@ public class ClassPathXmlApplicationContextTests {
 
 	@Test
 	public void testResourceAndInputStream() throws IOException {
+		new ClassPathXmlApplicationContext("");
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(RESOURCE_CONTEXT) {
 			@Override
 			public Resource getResource(String location) {

@@ -555,9 +555,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
+			//获取beanFactory对象
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			// Prepare the bean factory for use in this context.
+			//设置beanFactory的一些属性值
 			prepareBeanFactory(beanFactory);
 
 			try {
@@ -566,6 +568,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 				StartupStep beanPostProcess = this.applicationStartup.start("spring.context.beans.post-process");
 				// Invoke factory processors registered as beans in the context.
+				//调用所以的BeanFactoryPostProcessor
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 				// Register bean processors that intercept bean creation.
@@ -573,19 +576,20 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				beanPostProcess.end();
 
 				// Initialize message source for this context.
-				initMessageSource();
+				initMessageSource(); // 国际化
 
 				// Initialize event multicaster for this context.
-				initApplicationEventMulticaster();
+				initApplicationEventMulticaster(); // 初始化事件多播器
 
 				// Initialize other special beans in specific context subclasses.
 				onRefresh();
 
 				// Check for listener beans and register them.
-				registerListeners();
+				registerListeners(); // 注册监听器
 
 				// Instantiate all remaining (non-lazy-init) singletons.
-				finishBeanFactoryInitialization(beanFactory);
+				// 实例化所有非懒加载的单例对象
+				finishBeanFactoryInitialization(beanFactory); //IOC 关键点
 
 				// Last step: publish corresponding event.
 				finishRefresh();
@@ -739,7 +743,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * BeanPostProcessors etc in certain ApplicationContext implementations.
 	 * @param beanFactory the bean factory used by the application context
 	 */
-	protected void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+	protected void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) { // 扩展
 	}
 
 	/**
@@ -922,7 +926,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		beanFactory.freezeConfiguration();
 
 		// Instantiate all remaining (non-lazy-init) singletons.
-		beanFactory.preInstantiateSingletons();
+		beanFactory.preInstantiateSingletons(); //核心逻辑
 	}
 
 	/**

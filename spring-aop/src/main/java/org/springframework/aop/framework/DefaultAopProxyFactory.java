@@ -67,10 +67,10 @@ public class DefaultAopProxyFactory implements AopProxyFactory, Serializable {
 			if (targetClass.isInterface() || Proxy.isProxyClass(targetClass)) {
 				return new JdkDynamicAopProxy(config);
 			}
-			return new ObjenesisCglibAopProxy(config);
+			return new ObjenesisCglibAopProxy(config); // CGLIB(Code Generation Library)：是一个功能强大，高性能和高质量的代码生成库
 		}
 		else {
-			return new JdkDynamicAopProxy(config);
+			return new JdkDynamicAopProxy(config); // jdk动态代理
 		}
 	}
 

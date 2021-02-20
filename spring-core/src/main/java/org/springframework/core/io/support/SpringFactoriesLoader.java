@@ -133,13 +133,14 @@ public final class SpringFactoriesLoader {
 	}
 
 	private static Map<String, List<String>> loadSpringFactories(ClassLoader classLoader) {
-		Map<String, List<String>> result = cache.get(classLoader);
+		Map<String, List<String>> result = cache.get(classLoader); // 优先读取缓存的
 		if (result != null) {
 			return result;
 		}
 
 		result = new HashMap<>();
 		try {
+			// 读取META-INF/spring.factories
 			Enumeration<URL> urls = classLoader.getResources(FACTORIES_RESOURCE_LOCATION);
 			while (urls.hasMoreElements()) {
 				URL url = urls.nextElement();
@@ -159,7 +160,7 @@ public final class SpringFactoriesLoader {
 			// Replace all lists with unmodifiable lists containing unique elements
 			result.replaceAll((factoryType, implementations) -> implementations.stream().distinct()
 					.collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList)));
-			cache.put(classLoader, result);
+			cache.put(classLoader, result); //放到缓存中
 		}
 		catch (IOException ex) {
 			throw new IllegalArgumentException("Unable to load factories from location [" +

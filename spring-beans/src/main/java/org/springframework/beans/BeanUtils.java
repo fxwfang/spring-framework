@@ -209,6 +209,7 @@ public abstract class BeanUtils {
 						argsWithDefaultValues[i] = args[i];
 					}
 				}
+				//bean 实例化,没有初始化
 				return ctor.newInstance(argsWithDefaultValues);
 			}
 		}

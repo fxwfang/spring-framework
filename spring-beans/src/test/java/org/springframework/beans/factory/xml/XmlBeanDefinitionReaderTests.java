@@ -17,6 +17,7 @@
 package org.springframework.beans.factory.xml;
 
 import java.util.Arrays;
+import java.util.Stack;
 
 import org.junit.jupiter.api.Test;
 import org.xml.sax.InputSource;
@@ -66,7 +67,7 @@ public class XmlBeanDefinitionReaderTests {
 	}
 
 	@Test
-	public void withImport() {
+	public void withImport() throws InterruptedException {
 		SimpleBeanDefinitionRegistry registry = new SimpleBeanDefinitionRegistry();
 		Resource resource = new ClassPathResource("import.xml", getClass());
 		new XmlBeanDefinitionReader(registry).loadBeanDefinitions(resource);
@@ -99,6 +100,9 @@ public class XmlBeanDefinitionReaderTests {
 		testBeanDefinitions(registry);
 	}
 
+	/**
+	 * 解析 XML 配置文件成对应的 BeanDefinition 们的流程
+	 */
 	@Test
 	public void withFreshInputStream() {
 		SimpleBeanDefinitionRegistry registry = new SimpleBeanDefinitionRegistry();
